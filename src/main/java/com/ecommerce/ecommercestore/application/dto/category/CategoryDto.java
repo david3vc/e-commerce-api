@@ -1,5 +1,6 @@
 package com.ecommerce.ecommercestore.application.dto.category;
 
+import com.ecommerce.ecommercestore.shared.state.enums.State;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ public class CategoryDto {
     private Long idStore;
     private Long idBillboard;
     private String name;
+    private State state;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

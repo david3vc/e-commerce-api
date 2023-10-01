@@ -2,10 +2,13 @@ package com.ecommerce.ecommercestore.application.service.impl;
 
 import com.ecommerce.ecommercestore.application.dto.billboard.BillboardDto;
 import com.ecommerce.ecommercestore.application.dto.billboard.BillboardSaveDto;
+import com.ecommerce.ecommercestore.application.dto.billboard.BillboardSimpleDto;
 import com.ecommerce.ecommercestore.application.dto.billboard.mapper.BillboardMapper;
+import com.ecommerce.ecommercestore.application.dto.category.CategorySimpleDto;
 import com.ecommerce.ecommercestore.application.service.BillboardService;
 import com.ecommerce.ecommercestore.persistence.entity.Billboard;
 import com.ecommerce.ecommercestore.persistence.repository.BillboardRepository;
+import com.ecommerce.ecommercestore.shared.state.enums.State;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +37,7 @@ public class BillboardServiceImpl implements BillboardService {
     @Override
     public BillboardDto create(BillboardSaveDto billboardBody) {
         Billboard billboardSave = billboardMapper.toBillboard(billboardBody);
+        billboardSave.setState(State.ACTIVE.getValue());
         billboardSave.setCreatedAt(LocalDateTime.now());
 
         Billboard billboard = billboardRepository.save(billboardSave);
@@ -54,6 +58,18 @@ public class BillboardServiceImpl implements BillboardService {
 
     @Override
     public BillboardDto disable(Long id) {
-        return null;
+        Billboard billboardDb = billboardRepository.findById(id).get();
+
+        billboardDb.setState(State.DISABLE.getValue());
+
+        Billboard billboard = billboardRepository.save(billboardDb);
+
+        return billboardMapper.toBillboardDto(billboard);
+    }
+
+    @Override
+    public List<BillboardSimpleDto> select() {
+        List<Billboard> billboard = billboardRepository.findByState(State.ACTIVE.getValue());
+        return billboardMapper.toBillboardSimpleDtos(billboard);
     }
 }

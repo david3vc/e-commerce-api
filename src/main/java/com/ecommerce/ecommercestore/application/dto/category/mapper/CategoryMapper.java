@@ -4,17 +4,19 @@ import com.ecommerce.ecommercestore.application.dto.category.CategoryDto;
 import com.ecommerce.ecommercestore.application.dto.category.CategorySaveDto;
 import com.ecommerce.ecommercestore.application.dto.category.CategorySimpleDto;
 import com.ecommerce.ecommercestore.persistence.entity.Category;
+import com.ecommerce.ecommercestore.shared.state.mapper.StateMapper;
 import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {StateMapper.class})
 public interface CategoryMapper {
     // Dto from Entity start
     @Mapping(target = "id", source = "id")
     @Mapping(target = "idStore", source = "idStore")
     @Mapping(target = "idBillboard", source = "idBillboard")
     @Mapping(target = "name", source = "name")
+    @Mapping(target = "state", source = "state")
     @Mapping(target = "createdAt", source = "createdAt")
     @Mapping(target = "updatedAt", source = "updatedAt")
     CategoryDto toCategoryDto(Category category);
@@ -30,6 +32,7 @@ public interface CategoryMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "idStore", ignore = true)
     @Mapping(target = "idBillboard", ignore = true)
+    @Mapping(target = "state", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     Category toCategory(CategorySaveDto categorySaveDto);

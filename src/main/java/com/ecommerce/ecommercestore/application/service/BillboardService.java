@@ -2,6 +2,7 @@ package com.ecommerce.ecommercestore.application.service;
 
 import com.ecommerce.ecommercestore.application.dto.billboard.BillboardDto;
 import com.ecommerce.ecommercestore.application.dto.billboard.BillboardSaveDto;
+import com.ecommerce.ecommercestore.application.dto.billboard.BillboardSimpleDto;
 import com.ecommerce.ecommercestore.application.dto.category.CategoryDto;
 import com.ecommerce.ecommercestore.application.dto.category.CategorySaveDto;
 import com.ecommerce.ecommercestore.application.dto.category.CategorySimpleDto;
@@ -16,4 +17,5 @@ public interface BillboardService {
     BillboardDto create(BillboardSaveDto billboardBody);
     BillboardDto edit(Long id, BillboardSaveDto billboardBody);
     BillboardDto disable(Long id);
+    List<BillboardSimpleDto> select();
 }

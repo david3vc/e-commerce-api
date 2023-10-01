@@ -22,6 +22,7 @@ public class Category {
     @Column(name = "id_billboard")
     private Long idBillboard;
     private String name;
+    private String state;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "updated_at")

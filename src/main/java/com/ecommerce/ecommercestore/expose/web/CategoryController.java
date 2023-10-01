@@ -2,6 +2,7 @@ package com.ecommerce.ecommercestore.expose.web;
 
 import com.ecommerce.ecommercestore.application.dto.category.CategoryDto;
 import com.ecommerce.ecommercestore.application.dto.category.CategorySaveDto;
+import com.ecommerce.ecommercestore.application.dto.category.CategorySimpleDto;
 import com.ecommerce.ecommercestore.application.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -50,6 +51,13 @@ public class CategoryController {
         CategoryDto category = categoryService.disable(id);
 
         return  ResponseEntity.ok(category);
+    }
+
+    @GetMapping("/select")
+    ResponseEntity<List<CategorySimpleDto>> select(){
+        List<CategorySimpleDto> categories = categoryService.select();
+
+        return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/pagination")

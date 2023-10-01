@@ -7,6 +7,7 @@ import com.ecommerce.ecommercestore.application.dto.category.mapper.CategoryMapp
 import com.ecommerce.ecommercestore.application.service.CategoryService;
 import com.ecommerce.ecommercestore.persistence.entity.Category;
 import com.ecommerce.ecommercestore.persistence.repository.CategoryRepository;
+import com.ecommerce.ecommercestore.shared.state.enums.State;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -41,6 +42,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto create(CategorySaveDto categoryBody) {
         Category categorySave = categoryMapper.toCategory(categoryBody);
+
+        categorySave.setState(State.ACTIVE.getValue());
         categorySave.setCreatedAt(LocalDateTime.now());
 
         Category category = categoryRepository.save(categorySave);
@@ -62,12 +65,19 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto disable(Long id) {
-        return null;
+        Category categoryDb = categoryRepository.findById(id).get();
+
+        categoryDb.setState(State.DISABLE.getValue());
+
+        Category category = categoryRepository.save(categoryDb);
+
+        return categoryMapper.toCategoryDto(category);
     }
 
     @Override
     public List<CategorySimpleDto> select() {
-        return null;
+        List<Category> categories = categoryRepository.findByState(State.ACTIVE.getValue());
+        return categoryMapper.toCategorySimpleDtos(categories);
     }
 
     @Override

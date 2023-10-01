@@ -2,6 +2,7 @@ package com.ecommerce.ecommercestore.expose.web;
 
 import com.ecommerce.ecommercestore.application.dto.billboard.BillboardDto;
 import com.ecommerce.ecommercestore.application.dto.billboard.BillboardSaveDto;
+import com.ecommerce.ecommercestore.application.dto.billboard.BillboardSimpleDto;
 import com.ecommerce.ecommercestore.application.dto.category.CategoryDto;
 import com.ecommerce.ecommercestore.application.service.BillboardService;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,19 @@ public class BillboardController {
         BillboardDto billboard = billboardService.edit(id,billboardSaveDto);
 
         return ResponseEntity.ok(billboard);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BillboardDto> disabled(@PathVariable("id") Long id){
+        BillboardDto billboard = billboardService.disable(id);
+
+        return ResponseEntity.ok(billboard);
+    }
+
+    @GetMapping("/select")
+    public ResponseEntity<List<BillboardSimpleDto>> select(){
+        List<BillboardSimpleDto> billboards = billboardService.select();
+
+        return ResponseEntity.ok(billboards);
     }
 }

@@ -22,6 +22,7 @@ public class Billboard {
     private String label;
     @Column(name = "image_url")
     private String imageUrl;
+    private String state;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
