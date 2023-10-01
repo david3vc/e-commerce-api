@@ -52,13 +52,10 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto edit(Long id, CategorySaveDto categoryBody) {
         Category categoryDb = categoryRepository.findById(id).get();
 
-        Category categorySave = categoryMapper.toCategory(categoryBody);
+        categoryMapper.updateCategory(categoryDb, categoryBody);
+        categoryDb.setUpdatedAt(LocalDateTime.now());
 
-        categorySave.setId(categoryDb.getId());
-        categorySave.setCreatedAt(categoryDb.getCreatedAt());
-        categorySave.setUpdatedAt(LocalDateTime.now());
-
-        Category category = categoryRepository.save(categorySave);
+        Category category = categoryRepository.save(categoryDb);
 
         return categoryMapper.toCategoryDto(category);
     }
